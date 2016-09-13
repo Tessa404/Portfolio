@@ -1,0 +1,112 @@
+// list reset
+%listreset {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+// clearfix
+%clearfix {
+ &:after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+}
+
+.clearfix {
+  @extend %clearfix;
+}
+
+
+// transition
+%transition {
+ transition: all 0.3s ease-in-out;
+}
+
+// justify nav
+%justify {
+ text-align: justify;
+ font-size: 1px;
+ line-height: 0px;
+ > * {
+  display: inline-block;
+  vertical-align: top;
+  text-align: left;
+ }
+ &:after {
+  content: '';
+  width: 100%;
+  display: inline-block;
+  vertical-align: top;
+ }
+}
+
+
+
+/// * Helper class to truncate and add ellipsis to a string too long for it to fit
+/// * on a single line.
+/// * 1. Prevent content from wrapping, forcing it on a single line.
+/// * 2. Add ellipsis at the end of the line.
+
+.ellipsis {
+  white-space: nowrap; /* 1 */
+  text-overflow: ellipsis; /* 2 */
+  overflow: hidden;
+}
+
+@-webkit-keyframes bounce {
+  from, 20%, 53%, 80%, to {
+    -webkit-animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    -webkit-transform: translate3d(0,0,0);
+    transform: translate3d(0,0,0);
+  }
+
+  40%, 43% {
+    -webkit-animation-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+    animation-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+    -webkit-transform: translate3d(0, -30px, 0);
+    transform: translate3d(0, -30px, 0);
+  }
+
+  70% {
+    -webkit-animation-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+    animation-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+    -webkit-transform: translate3d(0, -15px, 0);
+    transform: translate3d(0, -15px, 0);
+  }
+
+  90% {
+    -webkit-transform: translate3d(0,-4px,0);
+    transform: translate3d(0,-4px,0);
+  }
+}
+
+@keyframes bounce {
+  from, 20%, 53%, 80%, to {
+    -webkit-animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    -webkit-transform: translate3d(0,0,0);
+    transform: translate3d(0,0,0);
+  }
+
+  40%, 43% {
+    -webkit-animation-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+    animation-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+    -webkit-transform: translate3d(0, -30px, 0);
+    transform: translate3d(0, -30px, 0);
+  }
+
+  70% {
+    -webkit-animation-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+    animation-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+    -webkit-transform: translate3d(0, -15px, 0);
+    transform: translate3d(0, -15px, 0);
+  }
+
+  90% {
+    -webkit-transform: translate3d(0,-4px,0);
+    transform: translate3d(0,-4px,0);
+  }
+}

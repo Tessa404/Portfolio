@@ -1,0 +1,1472 @@
+$breakpoints: (
+  'xs-phone': 320px,
+  'phone': 480px,
+  'tablet': 768px,
+  'desktop': 1024px,
+  'widescreen': 1200px
+);
+
+// keywords
+$media-expressions: (
+  'screen': 'screen',
+  'print': 'print',
+  'handheld': 'handheld',
+  'landscape': '(orientation: landscape)',
+  'portrait': '(orientation: portrait)',
+  'retina2x': '(-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi)',
+  'retina3x': '(-webkit-min-device-pixel-ratio: 2.5), (min-resolution: 240dpi)'
+);
+
+// ligatured operators ≥ ≤
+
+@import 'vendors/include-media';
+@import 'vendors/normalize';
+
+@import 'base/variables';
+@import 'base/functions';
+@import 'base/mixins';
+@import 'base/helpers';
+@import 'base/reset';
+@import 'base/typography';
+@import 'base/forms';
+
+body{
+	background: #f9f7f4;
+	min-width: 320px;
+}
+
+a{
+	text-decoration: none;
+}
+
+#wrapper {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  border-top: 5px solid $black;
+}
+
+.w1{
+	max-width: 960px;
+	margin: 0 auto;
+	@include media('<desktop') {
+		padding: 0 10px;
+	}
+}
+
+#header{
+	position: relative;
+}
+
+.header-top {
+	overflow: hidden;
+	.social-case {
+		float: right;
+		border: 1px solid #f4d4a0;
+		background: #f6eee2;
+		padding: 7px 19px 6px 18px;
+		img {
+			vertical-align: top;
+		}
+		.title {
+			font-size: 14px;
+			line-height: 15px;
+			padding-right: 78px;
+			float: left;
+			@include media('<tablet') {
+				display: none;
+			}
+		}
+	}
+}
+.header-main{
+	overflow: hidden;
+	.logo{
+		padding: 45px 0 37px;
+		float: left;
+		@include media('<desktop') {
+			padding: 25px 0 15px;
+		}
+		@include media('<tablet') {
+			padding: 10px 0 0;
+		}
+	}
+	.header-case{
+		float: right;
+		padding: 40px 0 0 0;
+		@include media('<desktop') {
+			padding: 20px 0 0 0;
+		}
+		@include media('<tablet') {
+			display: none;
+		}
+	}
+}
+
+#nav{
+	font-size: 15px;
+	line-height: 19px;
+	background: #191b1f;
+	padding: 0 9999px;
+	margin: 0 -9999px;
+	border-top: 1px solid #36383c;
+	&:after {
+		content:'';
+		display: block;
+		clear: both;
+	}
+	.header-nav {
+		text-align: center;
+		@extend %listreset;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		>li{
+			position: relative;
+			text-transform: uppercase;
+			z-index: 20;
+			float: left;
+			>a {
+				display: block;
+				color: $white;
+				padding: 20px 0;
+				&:hover {
+					color: $pink;
+				}
+				@include media('<desktop') {
+					padding: 10px 0;
+				}
+			}
+			@include media('<desktop') {
+				display: inline-block;
+				vertical-align: top;
+				float: none;
+				padding:0 16px;
+			}
+			&:first-child {
+				padding-left: 0;
+			}
+			&:first-child > a{
+				padding: 20px 0;
+				@include media('<desktop') {
+					padding: 10px 10px;
+				}
+			}
+			&.hover ul {
+				display: block;
+			}
+			ul {
+				font-family: 'Impact', 'Charcoal', sans-serif;
+				display: none;
+				position: absolute;
+				top: 100%;
+				left: 45px;
+				width: 180px;
+				background: #191b1f;
+				@extend %listreset;
+				li{
+					border-top: 1px solid #36383c;
+					float: none;
+					a{
+						display: block;
+						padding: 12px 20px;
+						color: $white;
+						&:hover {
+							color: $pink;
+						}
+					}
+				}
+				@include media('<desktop') {
+					left: 0;
+				}
+			}
+		}
+		.active {
+			a{
+				color: $pink;
+			}
+		}
+	}
+	@include media('<tablet') {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		right: 0;
+		z-index: 50;
+		text-align: center;
+		overflow: hidden;
+		visibility: hidden;
+		transition: visibility 1s ease;
+		background: none;
+		border: none;
+		.header-nav {
+			background: #191b1f;
+			float: none;
+			transform: translateY(-100%);
+			transition: transform 1s ease;
+			display: block;
+			li{
+				display: block;
+				padding: 0;
+				float: none;
+				a{
+					display: block;
+					padding: 10px 0;
+				}
+			}
+			.hover .dropdown { 
+				position: static;
+				text-align: center;
+				width: 100%;
+			}
+		}
+	}
+}
+
+.nav-active {
+	#nav {
+		visibility: visible !important;
+	}
+	.header-nav {
+		transform: translateY(0) !important;
+	}
+}
+
+.resize-active {
+	.header-nav {
+		transition: none !important;
+	}
+	#nav {
+    transition: none !important;
+  }
+}
+
+.nav-opener {
+	position: absolute;
+	top: 45px;
+	right: 0;
+	width: 40px;
+	height: 40px;
+	background: rgba(0, 0, 0, .5);
+	border-radius: 3px;
+	@include media('>=tablet') {
+		display: none;
+	}
+	&:hover {
+		opacity: 0.9; 
+	}
+	.nav-active & {
+		span {
+			opacity: 0;
+		}
+		&:before,
+		&:after {
+			transform: rotate(45deg);
+			top: 50%;
+			left: 15%;
+			right: 15%;
+		}
+		&:after {
+			transform: rotate(-45deg);
+		}
+	}
+	span,
+	&:before,
+	&:after {
+		background: $white;
+		border-radius: 4px;
+		position: absolute;
+		top: 50%;
+		left: 25%;
+		right: 25%;
+		height: 4px;
+		margin-top: -2px; /* height/2 */
+		transition: all .3s linear;
+	}
+	&:before,
+	&:after {
+		content:'';
+		top: 30%;
+	}
+	&:after {
+		top: 70%;
+	}
+}
+
+.slideshow {
+	position: relative;
+	height: auto;
+}
+
+.slideshow .slide {
+	position: absolute;
+	width: 70%;
+	z-index: 1;
+	padding-top: 60px;
+	left: 0;
+	top: 0;
+	img{
+		max-width: 100%;
+		vertical-align: top;
+	}
+	@include media('<desktop') {
+		padding-top: 30px;
+	}
+	@include media('<phone') {
+		width: 100%;
+	}
+}
+
+.slide-info{
+	position: absolute;
+	bottom: 0;
+	right: 3px;
+	left: 2px;
+	z-index: 15;
+	background: $black;
+	opacity: 0.7;
+	color: $white;
+	padding: 16px 20px 15px;
+	font-size: 13px;
+	line-height: 19px;
+	h2{
+		margin: 0 0 10px;
+		font-size: 18px;
+		line-height: 22px;
+		@include media('<desktop') {
+			font-size: 16px;
+			line-height: 18px;
+		}
+	}
+	p{
+		margin: 0;
+		a{
+			color: $red;
+			font-weight: bold;
+			&:hover {
+				color: $white;
+			}
+		}
+	}
+	@include media('<desktop') {
+		padding: 10px;
+		font-size: 11px;
+		line-height: 15px;
+	}
+	@include media('<tablet') {
+		bottom: -5px; 
+		position: relative;
+		margin: 0 2px 0 0;
+	}
+}
+
+.slideshow .slide.active {
+	z-index: 2;
+}
+
+.pagination{
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: 10;
+	font-size: 14px;
+	line-height: 18px;
+	padding-top: 61px;
+	@extend %listreset;
+	width: 28.125%;
+	li{
+		position: relative;
+		margin: 0 0 20px;
+		&.active a{
+			background: $pink;
+			border: 1px solid $dark-pink;
+		}
+		&.active:before {
+			margin: -16px 0 0 -12px ;
+			content:'';
+			clear: both;
+			position: absolute;
+			top: 43px;
+			left: 0;
+			z-index: 50;
+			width: 12px;
+			height: 16px;
+			border-style: solid;
+			border-width: 8px 12px 8px 0;
+			border-color: transparent $dark-pink transparent transparent;
+			@include media('<tablet') {
+				top: 26px;
+			}
+			@include media('<phone') {
+				display: none;
+			}
+		}
+		&.active:after {
+			margin: -14px 0 0 -12px ;
+			content: '';
+			clear: both;
+			position: absolute;
+			top: 42px;
+			left: 0;
+			z-index: 50;
+			width: 16px;
+			height: 12px;
+			border-style: solid;
+			border-width: 6px 14px 6px 0;
+			border-color: transparent $pink transparent transparent;
+			@include media('<tablet') {
+				top: 26px;
+			}
+			@include media('<phone') {
+				display: none;
+			}
+		}
+		a{
+			overflow: hidden;
+			display: block;
+			background: $dark-white;
+			border: 1px solid $light-pink;
+			padding: 10px 5px 8px 18px;
+			&:hover {
+				background: $pink;
+				border: 1px solid $dark-pink;
+			}
+			img{
+				border: 1px solid #4b4b4b;
+				float: left;
+				margin-right: 10px;
+				@include media('<desktop') {
+					width: 18%;
+				}
+				@include media('<tablet') {
+					display: none;
+				}
+			}
+			.title {
+				display: block;
+				padding: 3px 0 4px 0;
+				color: $black;
+				@include media('<tablet') {
+					display: none;
+				}
+			}
+			p{
+				margin: 0;
+				font-size: 11px;
+				line-height: 15px;
+				color: $light-gray;
+				span{
+					color: $red;
+					font-weight: bold;
+				}
+				@include media('<tablet') {
+					font-size: 11px;
+					line-height: 14px;
+				}
+				@include media('<phone') {
+					display: none;
+				}
+			}
+			@include media('<desktop') {
+				padding: 4px 2px 4px 9px;
+			}
+			@include media('<phone') {
+				width: 13px;
+				height: 13px;
+				border-radius: 50%;
+				margin: 10px 0 0;
+			}
+		}
+		@include media('<desktop') {
+			margin: 0 0 4px;
+		}
+	}
+	@include media('<desktop') {
+		padding-top: 31px;
+		font-size: 12px;
+		line-height: 16px;
+	}
+	@include media('<phone') {
+		width: 13px;
+		right: 10px;
+	}
+}
+
+#main {
+	overflow:hidden;
+	padding-top: 55px;
+	@include media('<desktop') {
+		padding-top: 20px;
+	}
+}
+
+#content {
+	width: 70%;
+	float: left;
+	margin-bottom: 56px;
+	.img-holder {
+		background: #e7e0d5;
+		border: 1px solid #cec4b4;
+		padding: 7px 7px 4px 7px;
+		margin-bottom: 16px;
+	}
+	.articles-title{
+		color: $black;
+		text-transform: uppercase;
+		border-bottom: 1px solid #dadada;
+		font-size: 23px;
+		font-family:'Impact', 'Charcoal', sans-serif;
+		font-weight: normal;
+		letter-spacing: -1px;
+		line-height: 24px;
+		padding: 2px 0 9px 0;
+		margin-bottom: 29px;
+	}
+	.readmore{
+		display: inline-block;
+		vertical-align: top;
+		font-size: 15px;
+		line-height: 14px;
+		padding: 8px 6px;
+		text-transform: uppercase;
+		color: $white;
+		background: $red;
+		font-family:'Impact', 'Charcoal', sans-serif;
+		letter-spacing: 1px;
+		font-weight: normal;
+		&:hover {
+			background: $black;
+		}
+		@include media('<desktop') {
+			padding: 8px;
+			margin-bottom: 30px;
+		}
+	}
+	.count{
+		position: relative;
+		background:url(../images/bg-comment-c.png) repeat-x;
+		margin: 4px 10px 0 30px;
+		float: right;
+		height: 40px;
+		&:after {
+			content:'';
+			clear: both;
+			position: absolute;
+			right: 0;
+			top: 0;
+			margin: 0 -6px 0 0;
+			background: url(../images/bg-comment-r.png) no-repeat;
+			width: 6px;
+			height: 25px;
+		}
+		&:before {
+			content:'';
+			clear: both;
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 29px;
+			height: 41px;
+			margin: 0 0 0 -29px;
+			background: url(../images/bg-comment-l.png) no-repeat;
+		}
+		.text {
+			margin: 0 0 0 -12px;
+			padding: 3px 6px 3px 0;
+			display: block;
+			color: $red;
+			vertical-align: top;
+			line-height: 19px;
+		}
+	}
+	.photos {
+		overflow: hidden;
+		margin-bottom: 34px;
+		.big-image-holder {
+			position: relative;
+			float: left;
+			width: 40.17%;
+			img {
+				border: 1px solid #cdcdcd;
+			}
+			.image-description {
+				position: absolute;
+				bottom: 5px;
+				left: 1px;
+				right: 1px;
+				background: rgba(0, 0, 0,0.8);
+				color: $white;
+				font-size: 11px;
+				line-height: 15px;
+				padding: 16px 15px 18px 10px;
+				h2{
+					font-size: 14px;
+					line-height: 18px;
+					margin: 0;
+					padding: 0 0 4px 0;
+				}
+				p{
+					margin: 0;
+				}
+				a{
+					color: $red;
+					font-weight: bold;
+					&:hover {
+						color: $white;
+					}
+				}
+				@include media('<tablet') {
+					padding: 8px 10px;
+				}
+				@include media('<phone') {
+					bottom: 24px;
+				}
+			}
+			img{
+				@include media('<desktop') {
+					width: 100%;
+				}
+				@include media('<phone') {
+					width: 100%;
+				}
+			}
+			@include media('<phone') {
+				float: none;
+				text-align: center;
+				width: 100%;
+				padding-bottom: 20px;
+			}
+		}
+		.small-image-holder{
+			@extend %listreset;
+			float: left;
+			width: 59.67%;
+			li{
+				float: left;
+				margin: 0;
+				padding: 0;
+				padding: 0 0 20px 20px;
+				width: 20%;
+				img{
+					vertical-align: top;
+				}
+			}
+			@include media('<phone') {
+				float: none;
+				width: 100%;
+				li{
+					padding: 0 5px 10px 5px;
+				}
+			}
+		}
+		@include media('<desktop') {
+			margin-bottom: 20px;
+		}
+	}
+	
+	
+	@include media('<desktop') {
+		margin-bottom: 30px;
+	}
+	@include media('<tablet') {
+		width: 100%;
+		float: none;
+	}
+	@include media('<phone') {
+		margin-bottom: 0;
+	}
+}
+
+.post-holder{
+	overflow: hidden;
+	margin: 0 -10px;
+	.post{
+		width: calc(100% / 3 - 20.1px);
+		float: left;
+		margin: 0 10px 55px;
+		overflow: hidden;
+		font-size: 13px;
+		line-height: 19px;
+		img{
+			width: 100%;
+		}
+		p{
+			margin: 0 0 17px 0;
+			padding: 0;
+		}
+		@include media('<desktop') {
+			font-size: 11px;
+			line-height: 17px;
+			margin-bottom: 10px;
+		}
+		.post-info{
+			overflow: hidden;
+			margin-bottom: 1px;
+			font-size: 11px;
+			line-height: 15px;
+			h3{
+				margin: 0 0 9px 0;
+				font-weight: bold;
+				font-size: 14px;
+				line-height: 18px;
+				@include media('<desktop') {
+					font-size: 12px;
+					line-height: 16px;
+					margin: 0 0 5px 0;
+				}
+			}
+			p{
+				margin: 0 0 13px 0;
+				padding: 0;
+				color: $light-gray;
+				span{
+					color: $red;
+					font-weight: bold;
+				}
+			}
+		}
+		@include media('<phone') {
+			float: none;
+			width: auto;
+			img{
+				width: 100%;
+			}
+		}
+	}
+	@include media('<phone') {
+		padding: 10px 20px;
+	}
+}
+
+.articles-post {
+	@extend %listreset;
+	overflow: hidden;
+	margin: 0 -10px;
+	li{
+		position: relative;
+		float: left;
+			margin:0 10px;
+			width: calc(50% - 20px);
+		img{
+			border: 1px solid #cdcdcd;
+			width: auto;
+			@include media('<desktop') {
+				width: 100%;
+			}
+		}
+		&:first-child {
+		}
+		@include media('<phone') {
+			float: none;
+			width: 100%;
+			padding-bottom: 20px;
+			img{
+				width: 100%;
+			}
+		}
+	}
+	.post-description {
+		position: absolute;
+		bottom: 4px;
+		left: 1px;
+		right: 1px;
+		background: rgba(0, 0, 0,0.8);
+		color: $white;
+		padding: 0 11px;
+		font-size: 11px;
+		line-height: 19px;;
+		h2 {
+			font-size: 14px;
+			line-height: 11px;
+			margin: 0;
+			padding: 18px 0 9px;
+			@include media('<tablet') {
+				padding: 5px 0;
+				font-size: 12px;
+			}
+		}
+		p{
+			margin: 0;
+			padding: 0 0 13px 0;
+		}
+		a{
+			color: $red;
+			font-weight: bold;
+			&:hover {
+				color: $white;
+			}
+		}
+		@include media('<tablet') {
+			font-size: 10px;
+			line-height: 15px;
+		}
+		@include media('<phone') {
+			bottom: 25px;
+		}
+	}
+}
+
+.news {
+	margin-bottom: 55px;
+	.news-holder {
+		background: #f1e3cc;
+		padding: 10px;
+		.tab-content {
+			position: relative;
+			background: $white;
+			margin: -1px 0 0 ;
+			border: 1px solid #dbbc8a;
+			.active {
+				position: static;
+				opacity: 1;
+				transition: opacity 0.3s ease;
+			}
+			.img-holder {
+				float: left;
+			}
+			.large {
+				text-transform: uppercase;
+				font-family:'Impact', 'Charcoal', sans-serif;
+				font-weight: normal;
+				font-size: 14px;
+			}
+		}
+		.tabset {
+			@extend %listreset;
+			overflow: hidden;
+			position: relative;
+			z-index: 2;
+			li{
+				float: left;
+				text-transform: uppercase;
+				margin: 0 10px 0 0;
+				@include media('<phone') {
+					margin: 0 2px 0 0;
+				}
+				a{
+					font-family:'Impact', 'Charcoal', sans-serif;
+					font-weight: normal;
+					letter-spacing: -1px;
+					display: block;
+					color: #a67e3e;
+					padding: 8px 15px 8px 15px;
+					@include media('<desktop') {
+						padding: 8px;
+					}
+					@include media('<tablet') {
+						font-size: 14px;
+					}
+					@include media('<phone') {
+						font-size: 11px;
+						padding: 4px 4px;
+					}
+					&:hover {
+						color: $black;
+						display: block;
+						background: $white;
+						border: 1px solid #dbbc8a;
+						border-bottom: none;
+						padding: 7px 14px 9px;
+						@include media('<desktop') {
+							padding: 8px 7px;
+						}
+						@include media('<phone') {
+							padding: 3px 3px 6px;
+						}
+					}
+				}
+				&.red {
+					float: right;
+					a{
+						color: $red;
+					}
+				}
+				&.active a {
+					color: $black;
+					display: block;
+					background: $white;
+					border: 1px solid #dbbc8a;
+					border-bottom: none;
+					padding: 7px 14px 9px;
+					@include media('<phone') {
+						padding: 4px 4px 5px;
+					}
+				}
+			}
+		}
+		.top-tab {
+			padding: 15px 20px 5px;
+			font-size: 11px;
+			line-height: 15px;
+			h3{
+				font-size: 14px;
+				line-height: 18px;
+				font-weight: bold;
+			}
+			p{
+				margin: 0;
+				color: $light-gray;
+				span{
+					color: $red;
+					font-weight: bold;
+				}
+			}
+		}
+		.middle-tab {
+			overflow: hidden;
+			padding: 4px 12px 0 19px;
+			font-size: 13px;
+			line-height: 20px;
+			.img-holder {
+				float: left;
+				margin-right: 20px;
+				margin-top: 7px;
+				@include media('<phone') {
+					float: none;
+					width: 100%;
+					img{
+						width: 100%;
+					}
+				}
+			}
+			p{
+				margin: 2px 0 21px;
+			}
+		}
+		.bottom-tab {
+			padding-bottom: 9px;
+			font-size: 13px;
+			line-height: 17px;
+			font-weight: bold;
+			&:after {
+				content:'';
+				display: block;
+				clear: both;
+			}
+			p {
+				margin: 0 0 0 18px;
+				display: block;
+				float: left;
+			}
+			.readmore {
+				float: right;
+				margin: -6px 21px 10px 0;
+				@include media('<phone') {
+					margin-top: 15px;
+				}
+			}
+		}
+	}
+	@include media('<desktop') { 
+		margin-bottom: 30px;
+	}
+}
+
+.js-tab-hidden {
+	position: absolute;
+	left: -9999px;
+	top: -9999px;
+	display: block;
+	max-width: 100%;
+	opacity: 0;
+}
+
+.hover-tooltip {
+	z-index: 10;
+	background: rgba(0, 0, 0,0.5);
+	color: $white;
+	padding: 10px 20px;
+	border-radius: 25px;
+	width: 300px;
+	@include media('<tablet') {
+		visibility: hidden;
+	}
+}
+
+#sidebar {
+	padding: 0 0 0 18px;
+	width: 30%;
+	float: right;
+	.social {
+		padding: 1px 0 36px;
+		@include media('<desktop') {
+			padding: 1px 0 16px;
+		}
+		@include media('<tablet') {
+			text-align: center;
+		}
+	}
+	.widget-search {
+		overflow: hidden;
+		padding: 20px 0 15px ;
+		input {
+			font-size: 13px;
+			line-height: 15px;
+			margin: 0;
+			border: 1px solid #dadada;
+			color: $gray;
+			width: 100%;
+			float: left;
+			padding: 12px 18px 11px;
+			@include media('<desktop') {
+				padding: 12px 18px 11px;
+			}
+		}
+		@include media('<desktop') {
+			padding: 10px 0 30px;
+		}
+		@include media('<tablet') {
+			text-align: center;
+		}
+	}
+	.sidebar-tab {
+		margin: 0 0 60px;
+		padding: 10px;
+		background: #f1e3cc;
+		.tab-content{
+			position: relative;
+			background: $white;
+			margin: -1px 0 0 ;
+			border: 1px solid #dbbc8a;
+			ul{
+				@extend %listreset;
+				padding: 20px 0 13px;
+				li{
+					overflow: hidden;
+					border-bottom: 1px solid #e2e2e2;
+					font-size: 11px;
+					line-height: 15px;
+					color: #595959;
+					padding: 9px 10px 15px;
+					img{
+						float: left;
+						margin-right: 11px;
+						@include media('<desktop') {
+							width: 35%;
+							margin-right: 7px;
+						}
+						@include media('<tablet') {
+							width: 20%;
+						}
+					}
+					h3{
+						font-size: 13px;
+						line-height: 16px;
+						font-weight: bold;
+						padding: 0 0 2px;
+						a{
+							color: #595959;
+							&:hover {
+								color: darken(#595959, 40%);
+							}
+						}
+						@include media('<desktop') {
+							font-size: 11px;
+							line-height: 11px;
+							padding: 0 0 1px;
+						}
+					}
+					p{
+						margin: 0;
+					}
+				}
+				@include media('<desktop') {
+					padding: 10px 7px 7px;
+					font-size: 8px;
+					line-height: 10px;
+				}
+			}
+		}
+		.tabset{
+			@extend %listreset;
+			overflow: hidden;
+			position: relative;
+			z-index: 1;
+			font-size: 16px;
+			line-height: 21px;
+			letter-spacing: -3px;
+			li{
+				float: left;
+				text-transform: uppercase;
+				width: calc(100% / 3);
+				a{
+					display: block;
+					color: $gray;
+					font-weight: bold;
+					text-align: center;
+					padding: 5px 6px 1px;
+					&:hover {
+						color: #e23e5c;
+						display: block;
+						background: $white;
+						border: 1px solid #dbbc8a;
+						border-bottom: none;
+						padding: 4px 5px 2px;
+					}
+				}
+				&.active a {
+					color: #e23e5c;
+					display: block;
+					background: $white;
+					border: 1px solid #dbbc8a;
+					border-bottom: none;
+					padding: 4px 5px 2px;
+				}
+			}
+			@include media('<desktop') {
+				font-size: 14px;
+				line-height: 18px;
+			} 
+			@include media('<tablet') {
+				font-size: 12px;
+				line-height: 16px;
+				letter-spacing: 0;
+			}
+		}
+		@include media('<desktop') {
+			margin: 0 0 30px;
+		}
+	}
+	@include media('<tablet') {
+		width: 100%;
+		float: none;
+		padding: 0;
+	}
+}
+
+.accordion{
+	font-size: 14px;
+	line-height: 18px;
+	@extend %listreset;
+	padding: 0 0 57px;
+	>li{
+		padding: 3px 0 0;
+		>a{
+			position: relative;
+			background: $dark-white;
+			border: 1px solid $light-pink;
+			display: block;
+			color: $gray;
+			padding: 10px 19px 10px 17px;
+			&:hover {
+				font-weight: bold;
+				&:after {
+					top: 16px;
+					right: 18px;
+					border-width: 8px 6px 0 6px;
+					border-color: #303030 transparent transparent transparent;
+				}
+			}
+			&:after {
+				content:'';
+				clear: both;
+				position: absolute;
+				top: 12px;
+				right: 20px;
+				width: 0;
+				height: 0;
+				border-style: solid;
+				border-width: 6px 0 6px 8px;
+				border-color: transparent transparent transparent #303030;
+			}
+		}
+		&.active>a:after {
+			top: 16px;
+			right: 18px;
+			border-width: 8px 6px 0 6px;
+			border-color: #303030 transparent transparent transparent;
+		}
+		ul{
+			@extend %listreset;
+			padding: 2px 0 0;
+			li{
+				padding: 2px 0 1px;
+				a{
+					border: 1px solid $light-pink;
+					color: $gray;
+					padding: 10px 19px 10px 17px;
+					position: relative;
+					background: $white;
+					display:block;
+					&:hover {
+						color: $red;
+						padding-left: 28px;
+						font-weight: bold;
+						&:after {
+							clear: both;
+							content:'';
+							position: absolute;
+							top: 0;
+							left: -2px;
+							bottom: 0;
+							background: $red;
+							width: 10px;
+						}
+					}
+				}
+				&.active a {
+					color: $red;
+					padding-left: 28px;
+					font-weight: bold;
+					&:after {
+						clear: both;
+						content:'';
+						position: absolute;
+						top: 0;
+						left: -2px;
+						bottom: 0;
+						background: $red;
+						width: 10px;
+					}
+				}
+			}
+		}
+	}
+	@include media('<desktop') {
+		font-size: 12px;
+		line-height: 16px;
+		padding: 25px 0 30px;
+	}
+}
+
+.twitter-post {
+	font-size: 13px;
+	line-height: 20px;
+	overflow: hidden;
+	padding: 0 0 18px;
+	.follow {
+		margin: 0 20px 0 0;
+		float: right;
+		font-size: 11px;
+		color: $red;
+		&:hover {
+			color: $black;
+		}
+	}
+	.twit-box {
+		border: 1px solid #dadada;
+		padding: 10px 20px 13px;
+		margin-bottom: 5px;
+	}
+	p{
+		display: block;
+		margin: 0;
+		a{
+			display: inline;
+			float: none;
+			font-weight: bold;
+			color: $red;
+		}
+	}
+	@include media('<desktop') {
+		font-size: 11px;
+		line-height: 17px;
+	}
+}
+
+.baners{
+	overflow: hidden;
+	padding: 35px 0 57px 0;
+	margin: 0 -9px;
+	position: relative;
+	a{
+		float: left;
+		margin: 0 9px;
+		width: calc(50% - 18px);
+		@include media('<desktop') {
+			width: calc(50% - 18px);
+			text-align: center;
+		}
+		@include media('<tablet') {
+			width: auto;
+			float: none;
+			display: inline-block;
+		}
+	}
+	img{
+		max-width: 100%;
+		height: auto;
+		vertical-align: top;
+	}
+	@include media('<desktop') {
+		padding: 20px 0 30px 0;
+		text-align: center;
+	}
+}
+
+#footer{
+	background: #191b1f;
+	padding: 0 9999px;
+	margin: 0 -9999px;
+	color: #b7b7b7;
+	overflow: hidden;
+	padding-top: 59px;
+	font-size: 13px;
+	line-height: 20px;
+	h3{
+		font-size: 24px;
+		line-height: 20px;
+		font-family:'Impact', 'Charcoal', sans-serif;
+		font-weight: normal;
+		color: $white;
+		margin-bottom: 28px;
+		@include media('<desktop') {
+			font-size: 20px;
+			line-height: 18px;
+		}
+		@include media('<tablet') {
+			margin-bottom: 10px;
+		}
+		@include media('<phone') {
+			font-size: 15px;
+			margin-bottom: 5px;
+		}
+	}
+	h4{
+		font-size: 13px;
+		line-height: 19px;
+		color: $red;
+		font-weight: bold;
+		margin: 0;
+	}
+	a{
+		color: $red;
+		&:hover {
+			color: $white;
+		}
+	}
+	b{
+		color: $white;
+	}
+	span{
+		color: #737373;
+		font-size: 11px;
+		line-height: 15px;
+	}
+	p{
+		margin: 0;
+		a{
+			font-size: 11px;
+			line-height: 15px;
+		}
+	}
+	ul{
+		padding: 8px 0 0;;
+		@extend %listreset;
+		li{
+			padding: 0 0 8px 0;
+			a{
+				color: #b7b7b7;
+				&:hover {
+					color: $red;
+				}
+			}
+			@include media('<phone') {
+				padding-bottom: 5px;
+			}
+		}
+	}
+	.tweet,
+	.comment{
+		padding:9px 39px 12px 0;
+		@include media('<phone') {
+			padding-right: 10px; 
+		}
+	}
+	.comment{
+		padding: 8px 39px 12px 0;
+		@include media('<phone') {
+			padding-right: 10px;
+		}
+	}
+	.cols-holder {
+		overflow: hidden;
+	}
+	.footer-tweets,
+	.footer-posts,
+	.footer-comments,
+	.footer-tags {
+		float: left;
+		padding: 0 0 3px;
+	}
+	.footer-tweets {
+		width: 34.37%;
+	}
+	.footer-posts{
+		width: 22.91%;
+	}
+	.footer-comments{
+		width: 26.04%;
+	}
+	.footer-tags{
+		width: 16.66%;
+	}
+	.footer-tweets,
+	.footer-posts,
+	.footer-comments,
+	.footer-tags {
+		@include media('<tablet') {
+		text-align: center;
+		float: none;
+		width: 100%;
+		}
+		@include media('<tablet') {
+			padding: 0 30px 15px;
+		}
+		@include media('<phone') {
+			padding: 0 15px 8px;
+		}
+	}
+	.tags{
+		overflow: hidden;
+		margin: 0 -5px 0 0;
+		li{
+			float: left;
+			margin: 0 5px 0 0;
+			a{
+				display: block;
+			}
+		}	
+	}
+	.copy{
+		overflow: hidden;
+		margin: 0 0 20px ;
+		padding-top: 15px;
+		border-top: 1px solid #33383d;
+		p{
+			margin: 0;
+			display: block;
+			float: left;
+		}
+		a{
+			color: #b7b7b7;
+			&:hover {
+				color: $white;
+			}
+		}
+		.footer-social {
+			float: right;
+			margin: 4px 20px 0 0;
+			@include media('<tablet') {
+				float: none;
+				text-align: center;
+				margin-top: 30px;
+			}
+			@include media('<phone') {
+				margin-top: 50px;
+			}
+		}
+		@include media('<phone') {
+			text-align: center;
+		}
+	}
+	@include media('<desktop') {	
+		padding-top: 30px;
+		font-size: 11px;
+		line-height: 16px;
+	}
+	@include media('<tablet') {
+		padding-top: 30px;
+		font-size: 13px;
+	}
+}
